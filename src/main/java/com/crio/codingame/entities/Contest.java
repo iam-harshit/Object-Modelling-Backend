@@ -23,6 +23,9 @@ public class Contest extends BaseEntity{
         this.level = level;
         this.creator = creator;
         this.contestStatus = contestStatus;
+        for(Question q : questions){
+            System.out.println(q);
+        }
     }
     // TODO: CRIO_TASK_MODULE_ENTITIES
     // Complete the validateQuestionList method to verify if all the questions have the same level and are equal to contest level.
@@ -32,10 +35,16 @@ public class Contest extends BaseEntity{
     //  2. You can use "./gradlew build" to check if your code builds successfully.
 
     private void validateQuestionList(List<Question> qList, Level contestLevel) throws InvalidContestException {
+
+        for(Question q : qList){
+            if(q.getLevel() != contestLevel){
+                throw new InvalidContestException("Questions level didn't match with contest level");
+            }
+        }
+
     }
 
-
-    
+  
     public String getName() {
         return name;
     }
