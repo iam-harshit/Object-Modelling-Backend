@@ -33,7 +33,7 @@ public class ListContestCommand implements ICommand{
             else{
                 contest = contestService.getAllContestLevelWise(null);
             }
-            System.out.println(contest);
+            System.out.println(contest.toString());
         }
         catch(Exception e){
             System.out.println(e.getMessage());

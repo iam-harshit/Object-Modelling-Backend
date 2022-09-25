@@ -39,7 +39,7 @@ public class CreateContestCommand implements ICommand{
             else{
                 contest = contestService.create(contestName, level, contestCreator, null);
             }
-            System.out.println(contest);
+            System.out.println(contest.toString());
         }
         catch(Exception e){
             System.out.println(e.getMessage());
