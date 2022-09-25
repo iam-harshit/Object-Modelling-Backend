@@ -1,8 +1,6 @@
 package com.crio.codingame.commands;
 
 import java.util.List;
-
-import com.crio.codingame.dtos.UserRegistrationDto;
 import com.crio.codingame.services.IUserService;
 
 public class WithdrawContestCommand implements ICommand{
@@ -22,6 +20,15 @@ public class WithdrawContestCommand implements ICommand{
 
     @Override
     public void execute(List<String> tokens) {
+        String contestId = tokens.get(1);
+        String userName = tokens.get(2);
+
+        try{
+            System.out.println(userService.withdrawContest(contestId, userName));
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+        }
     }
     
 }
