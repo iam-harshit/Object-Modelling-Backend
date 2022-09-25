@@ -80,7 +80,7 @@ public class ContestRepository implements IContestRepository {
         if (level == null) {
             throw new ContestNotFoundException("Contest Not found");
         }
-        List<Contest> contests =contestMap.entrySet().stream().map(e -> e.getValue())
+        List<Contest> contests = contestMap.entrySet().stream().map(e -> e.getValue())
                         .filter(e -> e.getLevel().equals(level))
                         .collect(Collectors.toList());
         return contests;

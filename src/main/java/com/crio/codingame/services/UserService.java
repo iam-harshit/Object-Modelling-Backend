@@ -54,8 +54,6 @@ public class UserService implements IUserService {
             return sortedList;
         }
 
-
-
      return Collections.emptyList();
     }
 

@@ -100,6 +100,15 @@ public class ContestService implements IContestService {
 
     
     private void validateContest(final Contest contest, final String contestCreator) throws InvalidContestException {
+        if(contest.getContestStatus().equals(ContestStatus.IN_PROGRESS)){
+            throw new InvalidContestException("Cannot Run Contest. Contest for given id:"+contest.getId()+" is in progress!");
+        }
+        if(contest.getContestStatus().equals(ContestStatus.ENDED)){
+            throw new InvalidContestException("Cannot Run Contest. Contest for given id:"+contest.getId()+ " is ended!");
+        }
+        if(!contest.getCreator().getName().equals(contestCreator)){
+            throw new InvalidContestException("Cannot Run Contest. User:"+contestCreator+ " is not the contest creator of contest id:"+contest.getId());
+        }
     }
 
     private List<Question> pickRandomQuestions(final List<Question> questions){

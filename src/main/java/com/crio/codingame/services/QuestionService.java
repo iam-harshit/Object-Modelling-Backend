@@ -16,7 +16,7 @@ public class QuestionService implements IQuestionService{
 
     @Override
     public Question create(String title, Level level, Integer difficultyScore) {
-        final Question question = new Question(title,level, difficultyScore);
+        final Question question = new Question(title, level, difficultyScore);
         return questionRepository.save(question);
     }
 
