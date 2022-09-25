@@ -27,18 +27,12 @@ public class UserService implements IUserService {
         this.userRepository = userRepository;
         this.contestRepository = contestRepository;
     }
-    // TODO: CRIO_TASK_MODULE_SERVICES
-    // Create and store User into the repository.
     @Override
     public User create(String name) {
-     User user = new User(name, 1500);
-     return userRepository.save(user);
+        User user = new User(name, 1500);
+        return userRepository.save(user);
     }
 
-    // TODO: CRIO_TASK_MODULE_SERVICES
-    // Get All Users in Ascending Order w.r.t scores if ScoreOrder ASC.
-    // Or
-    // Get All Users in Descending Order w.r.t scores if ScoreOrder DESC.
 
     @Override
     public List<User> getAllUserScoreOrderWise(ScoreOrder scoreOrder){
@@ -47,15 +41,20 @@ public class UserService implements IUserService {
 
         if (scoreOrder.toString().compareTo("ASC") == 0) {
             //System.out.println("ASC");
-            sortedList = users.stream().sorted(Comparator.comparingInt(User::getScore)).collect(Collectors.toList());
+            sortedList = users.stream().sorted(Comparator.comparingInt(User::getScore))
+                    .collect(Collectors.toList());
+            
             return sortedList;
         }
         
         if (scoreOrder.toString().compareTo("DESC") == 0) {
             //System.out.println("DESC");
-            sortedList = users.stream().sorted(Comparator.comparingInt(User::getScore).reversed()).collect(Collectors.toList());
+            sortedList = users.stream().sorted(Comparator.comparingInt(User::getScore).reversed())
+                    .collect(Collectors.toList());
             return sortedList;
         }
+
+
 
      return Collections.emptyList();
     }
@@ -78,45 +77,44 @@ public class UserService implements IUserService {
         return new UserRegistrationDto(contest.getName(), user.getName(),RegisterationStatus.REGISTERED);
     }
 
-    // TODO: CRIO_TASK_MODULE_SERVICES
-    // Withdraw the user from the contest
-    // Hint :- Refer Unit Testcases withdrawContest method
 
     @Override
     public UserRegistrationDto withdrawContest(String contestId, String userName) throws ContestNotFoundException, UserNotFoundException, InvalidOperationException {
-            Contest contest = contestRepository.findById(contestId)
-                    .orElseThrow(() -> new ContestNotFoundException(
-                            "Cannot Withdraw Contest. Contest for given id:" + contestId
-                                    + " not found!"));
-    
-            User user = userRepository.findByName(userName).orElseThrow(() -> new UserNotFoundException(
-                    "Cannot Withdraw Contest. User for given name:"+ userName+" not found!"));
-    
-            ContestStatus contestStatus = contest.getContestStatus();
-    
-            if (contestStatus.equals(ContestStatus.IN_PROGRESS)) {
-                throw new InvalidOperationException("Cannot Withdraw Contest. Contest for given id:"
-                        + contestId + " is in progress!");
-            }
-            else if (contestStatus.equals(ContestStatus.ENDED)) {
-                throw new InvalidOperationException("Cannot Withdraw Contest. Contest for given id:"
-                        + contestId + " is already ended!");
-            }
-            else if (!user.checkIfContestExists(contest)) {
-                throw new InvalidOperationException(
-                        "Cannot Withdraw Contest. User for given contest id:" + contestId
-                                + " is not registered!");
-            }
-            else if (userName.equals(contest.getCreator().getName())) {
-                throw new InvalidOperationException("Cannot Withdraw Contest. Contest Creator:"
-                        + contestId + "not allowed to withdraw contest!");
-    
-            }
-            
-            user.deleteContest(contest);
-            userRepository.save(user);
-    
-            return new UserRegistrationDto(contest.getName(), userName, RegisterationStatus.NOT_REGISTERED);
+        Contest contest = contestRepository.findById(contestId)
+                .orElseThrow(() -> new ContestNotFoundException(
+                        "Cannot Withdraw Contest. Contest for given id:" + contestId
+                                + " not found!"));
+
+        User user = userRepository.findByName(userName).orElseThrow(() -> new UserNotFoundException(
+                "Cannot Withdraw Contest. User for given name:"+ userName+" not found!"));
+
+        
+        ContestStatus contestStatus = contest.getContestStatus();
+
+        if (contestStatus.equals(ContestStatus.IN_PROGRESS)) {
+            throw new InvalidOperationException("Cannot Withdraw Contest. Contest for given id:"
+                    + contestId + " is in progress!");
+        }
+        else if (contestStatus.equals(ContestStatus.ENDED)) {
+            throw new InvalidOperationException("Cannot Withdraw Contest. Contest for given id:"
+                    + contestId + " is already ended!");
+        }
+        else if (!user.checkIfContestExists(contest)) {
+            throw new InvalidOperationException(
+                    "Cannot Withdraw Contest. User for given contest id:" + contestId
+                            + " is not registered!");
+        }
+        else if (userName.equals(contest.getCreator().getName())) {
+            throw new InvalidOperationException("Cannot Withdraw Contest. Contest Creator:"
+                    + contestId + "not allowed to withdraw contest!");
+
+        }
+        
+        user.deleteContest(contest);
+        userRepository.save(user);
+
+        return new UserRegistrationDto(contest.getName(), userName,
+                RegisterationStatus.NOT_REGISTERED);
     }
     
 }

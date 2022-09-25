@@ -1,12 +1,11 @@
 package com.crio.codingame.repositories;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
+
 import com.crio.codingame.entities.Level;
 import com.crio.codingame.entities.Question;
 import com.crio.codingame.exceptions.QuestionNotFoundException;
@@ -37,9 +36,6 @@ public class QuestionRepository implements IQuestionRepository {
         return entity;
     }
 
-    // TODO: CRIO_TASK_MODULE_SERVICES
-    // Find all the list of Question Present in the Repository
-    // Tip:- Use Java Streams
 
     @Override
     public List<Question> findAll() {
@@ -76,20 +72,17 @@ public class QuestionRepository implements IQuestionRepository {
         return 0;
     }
 
-    // TODO: CRIO_TASK_MODULE_SERVICES
-    // Find all the list of Question Present in the Repository provided Level
-    // Tip:- Use Java Streams
 
     @Override
     public List<Question> findAllQuestionLevelWise(Level level) {
-        if(level == null){
-            throw new QuestionNotFoundException("Questions not found");
+        if (level == null) {
+            throw new QuestionNotFoundException("Question not found");
         }
-        List<Question> questions = questionMap.entrySet().stream().map(e -> e.getValue()).filter(e -> e.getLevel().equals(level)).collect(Collectors.toList());
-        for(Question q : questions){
-            System.out.println(q.getLevel());
+        List<Question> questions = questionMap.entrySet().stream().map(e -> e.getValue())
+                .filter(e -> e.getLevel().equals(level)).collect(Collectors.toList());
+        for (Question ques : questions) {
+            System.out.println(ques.getLevel());
         }
-
         return questions;
     }
     

@@ -53,11 +53,10 @@ public class ContestService implements IContestService {
         return contest;
     }
 
-    // TODO: CRIO_TASK_MODULE_SERVICES
-    // Return a specific List of Random Questions as specified by numQuestion.
 
     private List<Question> pickQuestionsList(final List<Question> questions,final Integer numQuestion){
         Random random = new Random();
+        
         final List<Question> newList = new ArrayList<Question>();
         for (int i = 0; i < numQuestion; i++) {
             int randomIndex = random.nextInt(questions.size());
@@ -67,17 +66,13 @@ public class ContestService implements IContestService {
         return newList;
     }
 
-    // TODO: CRIO_TASK_MODULE_SERVICES
-    // Get All Contest if level is not specified.
-    // Or
-    // Get List of Contest which matches the level provided.
 
     @Override
     public List<Contest> getAllContestLevelWise(Level level) {
-        if(level == null){
+        if (level == null) {
             return contestRepository.findAll();
         }
-        return contestRepository.findAllContestLevelWise(level);
+       return contestRepository.findAllContestLevelWise(level);
     }
 
     @Override
@@ -102,20 +97,11 @@ public class ContestService implements IContestService {
         Contest endedContest = contestRepository.save(contest);
        return new ContestSummaryDto(endedContest,userResultList);
     }
+
     
     private void validateContest(final Contest contest, final String contestCreator) throws InvalidContestException {
-        if(contest.getContestStatus().equals(ContestStatus.IN_PROGRESS)){
-            throw new InvalidContestException("Cannot Run Contest. Contest for given id:"+contest.getId()+" is in progress!");
-        }
-        if(contest.getContestStatus().equals(ContestStatus.ENDED)){
-            throw new InvalidContestException("Cannot Run Contest. Contest for given id:"+contest.getId()+ " is ended!");
-        }
-        if(!contest.getCreator().getName().equals(contestCreator)){
-            throw new InvalidContestException("Cannot Run Contest. User:"+contestCreator+ " is not the contest creator of contest id:"+contest.getId());
-        }
     }
 
-    //Reference:- https://www.geeksforgeeks.org/randomly-select-items-from-a-list-in-java/
     private List<Question> pickRandomQuestions(final List<Question> questions){
         List<Question> qList = questions.stream().collect(Collectors.toList());
         int size = qList.size();

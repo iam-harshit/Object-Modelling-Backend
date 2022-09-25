@@ -38,9 +38,6 @@ public class ContestRepository implements IContestRepository {
         return entity;
     }
 
-    // TODO: CRIO_TASK_MODULE_SERVICES
-    // Find all the list of Contest Present in the Repository
-    // Tip:- Use Java Streams
 
     @Override
     public List<Contest> findAll() {
@@ -77,16 +74,15 @@ public class ContestRepository implements IContestRepository {
         return 0;
     }
 
-    // TODO: CRIO_TASK_MODULE_SERVICES
-    // Find all the list of Contest Present in the Repository provided Level
-    // Tip:- Use Java Streams
 
     @Override
     public List<Contest> findAllContestLevelWise(Level level) {
         if (level == null) {
             throw new ContestNotFoundException("Contest Not found");
         }
-        List<Contest> contests = contestMap.entrySet().stream().map(e -> e.getValue()).filter(e -> e.getLevel().equals(level)).collect(Collectors.toList());
+        List<Contest> contests =contestMap.entrySet().stream().map(e -> e.getValue())
+                        .filter(e -> e.getLevel().equals(level))
+                        .collect(Collectors.toList());
         return contests;
     }
 

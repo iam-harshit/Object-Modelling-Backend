@@ -53,14 +53,11 @@ public class User extends BaseEntity {
         return contests.stream().collect(Collectors.toList());
     }
 
-    // TODO: CRIO_TASK_MODULE_SERVICES
-    // Check if Contest is present in the User or Not
 
     public boolean checkIfContestExists(Contest contest){
-        for(Contest c : contests){
-            if(c.getId() == contest.getId()){
+        for (Contest con : contests) {
+            if (con.getId() == contest.getId())
                 return true;
-            }
         }
         return false;
     }

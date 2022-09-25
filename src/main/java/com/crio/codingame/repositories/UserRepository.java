@@ -34,14 +34,9 @@ public class UserRepository implements IUserRepository{
         return entity;
     }
 
-    // TODO: CRIO_TASK_MODULE_SERVICES
-    // Find all the list of User Present in the Repository
-    // Tip:- Use Java Streams
 
     @Override
     public List<User> findAll() {
-     List<User> users = userMap.entrySet().stream().map(e -> e.getValue()).collect(Collectors.toList());
-     return users;
     }
 
     @Override
@@ -73,15 +68,9 @@ public class UserRepository implements IUserRepository{
         return 0;
     }
 
-    // TODO: CRIO_TASK_MODULE_SERVICES
-    // Find the User Present in the Repository provided name
-    // Tip:- Use Java Streams
 
     @Override
     public Optional<User> findByName(String name) {
-        List<User> users = userMap.entrySet().stream().map(e -> e.getValue()).filter(n -> n.getName().equalsIgnoreCase(name)).collect(Collectors.toList());
-        Optional<User> listOptional = users.stream().findAny();
-        return listOptional;
     }
     
 }

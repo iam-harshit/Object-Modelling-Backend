@@ -35,15 +35,13 @@ public class Contest extends BaseEntity{
     }
 
     private void validateQuestionList(List<Question> qList, Level contestLevel) throws InvalidContestException {
-        for(Question q : qList){
-            if(q.getLevel() != contestLevel){
-                throw new InvalidContestException("Question level doesn't match with contest level");
+        for (Question question : qList) {
+            if (question.getLevel() != contestLevel) {
+                throw new InvalidContestException("Contest Level differs from the question level");
             }
         }
     }
 
-    // TODO: CRIO_TASK_MODULE_SERVICES
-    // Change the Contest Status to ENDED
 
     public void endContest(){
         this.contestStatus = ContestStatus.ENDED;
